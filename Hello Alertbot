@@ -1,0 +1,27 @@
+if tradingWindow
+
+  if close < buySignal1 and close > buySignal2
+	  alert(syminfo.ticker + " might be entering into a buy zone", alert.freq_once_per_bar)
+		strategy.entry("Small Long", strategy.long, stop = close*0.95)
+	
+	if low < buySignal2 and low > buySignal3
+		alert(syminfo.ticker + " is probably entering into a buy zone", alert.freq_once_per_bar)
+		strategy.entry("Medium Long", strategy.long, stop = close*0.95)
+
+	if low < buySignal3
+		alert(syminfo.ticker + " is in at a good price! Consider Buying", alert.freq_once_per_bar)
+		strategy.entry("Big Long", strategy.long, stop = close*0.95)
+
+	if close > sellSignal1 and close < sellSignal2
+		alert(syminfo.ticker + " is slipping into a sell zone", alert.freq_once_per_bar)
+		//strategy.close("Medium Long",qty_percent = 20)
+
+	if high > sellSignal2 and high < sellSignal3
+		alert(syminfo.ticker + " could be at a good price to sell", alert.freq_once_per_bar)
+		strategy.close("Medium Long",qty_percent = 10)
+
+	if high > sellSignal3
+		alert(syminfo.ticker + " is at a really good price right now! Consider taking some profits or shorting!", alert.freq_once_per_bar)
+		strategy.close("Small Long")
+		strategy.close("Medium Long")
+		strategy.close("Big Long")
